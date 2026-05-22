@@ -37,6 +37,16 @@
   background-color: #f0f5ff;
 }
 
+:global(html.dark) .secondary {
+  color: #d4d4d4;
+  border-color: #505050;
+}
+
+:global(html.dark) .secondary:hover {
+  background-color: #1a1a1a;
+  border-color: #808080;
+}
+
 .danger {
   background-color: #ff4d4f;
   color: white;

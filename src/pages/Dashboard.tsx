@@ -8,11 +8,7 @@ import {
   DollarOutlined,
 } from '@ant-design/icons';
 
-/**
- * 仪表板页面 - 展示数据统计和图表示例
- */
 export function Dashboard() {
-  // 示例数据状态
   const [stats, setStats] = useState({
     users: 1234,
     orders: 567,
@@ -20,7 +16,6 @@ export function Dashboard() {
     revenue: 123456,
   });
 
-  // 刷新数据示例
   const handleRefresh = () => {
     setStats({
       users: Math.floor(Math.random() * 10000),
@@ -32,13 +27,12 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* 页面标题 */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-1">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-ink-50 mb-1">
             仪表板
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-ink-300">
             实时数据统计和分析
           </p>
         </div>
@@ -47,7 +41,6 @@ export function Dashboard() {
         </Button>
       </div>
 
-      {/* 统计卡片 - 使用 Ant Design Statistic */}
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} lg={6}>
           <Card title="用户总数">
@@ -95,38 +88,43 @@ export function Dashboard() {
         </Col>
       </Row>
 
-      {/* 详细数据表 */}
       <Card title="近期数据" className="overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 border-b">
+          <thead className="bg-gray-50 dark:bg-ink-700 border-b dark:border-ink-600">
             <tr>
-              <th className="px-4 py-3 font-semibold text-gray-900">
+              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-ink-50">
                 日期
               </th>
-              <th className="px-4 py-3 font-semibold text-gray-900">
+              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-ink-50">
                 用户
               </th>
-              <th className="px-4 py-3 font-semibold text-gray-900">
+              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-ink-50">
                 订单
               </th>
-              <th className="px-4 py-3 font-semibold text-gray-900">
+              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-ink-50">
                 收入
               </th>
             </tr>
           </thead>
           <tbody>
             {[1, 2, 3, 4, 5].map((day) => (
-              <tr key={day} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3 text-gray-700">
+              <tr key={day} className="
+                border-b
+                dark:border-ink-600
+                hover:bg-gray-50
+                dark:hover:bg-ink-700
+                transition-colors
+              ">
+                <td className="px-4 py-3 text-gray-700 dark:text-ink-200">
                   2024-05-{String(day).padStart(2, '0')}
                 </td>
-                <td className="px-4 py-3 text-gray-700">
+                <td className="px-4 py-3 text-gray-700 dark:text-ink-200">
                   {Math.floor(Math.random() * 100)}
                 </td>
-                <td className="px-4 py-3 text-gray-700">
+                <td className="px-4 py-3 text-gray-700 dark:text-ink-200">
                   {Math.floor(Math.random() * 50)}
                 </td>
-                <td className="px-4 py-3 text-green-600 font-semibold">
+                <td className="px-4 py-3 text-green-600 dark:text-green-400 font-semibold">
                   ¥{Math.floor(Math.random() * 10000)}
                 </td>
               </tr>
@@ -135,13 +133,12 @@ export function Dashboard() {
         </table>
       </Card>
 
-      {/* 功能演示 */}
       <Card title="功能演示">
         <div className="space-y-4">
-          <p className="text-gray-700">
+          <p className="text-gray-700 dark:text-ink-200">
             这个页面演示了如何在 React 应用中集成数据统计和交互功能。
           </p>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-ink-200">
             <li>使用 Ant Design Statistic 组件展示统计数据</li>
             <li>集成 React Hooks（useState）管理数据状态</li>
             <li>支持数据动态更新和交互</li>

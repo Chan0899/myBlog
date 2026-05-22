@@ -9,7 +9,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const { Sider } = Layout;
 
-// 侧边栏菜单项配置
 const sidebarItems: MenuProps['items'] = [
   {
     key: '/',
@@ -28,14 +27,10 @@ const sidebarItems: MenuProps['items'] = [
   },
 ];
 
-/**
- * 全局侧边栏组件
- */
 export function AppSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 处理菜单点击事件
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     navigate(e.key);
   };
@@ -43,10 +38,14 @@ export function AppSidebar() {
   return (
     <Sider
       width={200}
-      style={{
-        background: '#fff',
-        borderRight: '1px solid #f0f0f0',
-      }}
+      className="
+        bg-white
+        dark:bg-ink-800
+        border-r
+        border-gray-100
+        dark:border-ink-700
+        transition-colors
+      "
     >
       <Menu
         mode="inline"
@@ -57,6 +56,7 @@ export function AppSidebar() {
           height: '100vh',
           borderRight: 'none',
           paddingTop: '20px',
+          background: 'transparent',
         }}
       />
     </Sider>

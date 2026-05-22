@@ -19,6 +19,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply bg-white text-gray-900;
+}
+
+html.dark,
+html.dark body {
+  @apply bg-black text-ink-100;
 }
 
 #root {

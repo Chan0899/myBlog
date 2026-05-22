@@ -9,9 +9,11 @@ export function AppFooter() {
   return (
     <Footer className="
       bg-gray-900
+      dark:bg-ink-700
       text-white
       text-center
       py-6
+      transition-colors
     ">
       <div className="space-y-2">
         <p className="m-0">© 2024 MyApp. 版权所有</p>

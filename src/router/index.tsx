@@ -3,13 +3,11 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import { MainLayout } from '../components/Layout/MainLayout';
 import { LoadingFallback } from '../components';
 
-// 懒加载页面组件 - 支持按需加载，优化初始加载性能
-const HomePage = lazy(() => import('../pages/Home'));
-const DashboardPage = lazy(() => import('../pages/Dashboard'));
-const SettingsPage = lazy(() => import('../pages/Settings'));
+const LandingPage = lazy(() => import('../pages/Landing'));
+const KnowledgeTreePage = lazy(() => import('../pages/Home'));
+const ProjectSharePage = lazy(() => import('../pages/Dashboard'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
-// 路由懒加载包装器 - 为所有路由添加 Suspense 边界
 function withSuspense(Component: ComponentType) {
   return (
     <Suspense fallback={<LoadingFallback />}>
@@ -18,7 +16,6 @@ function withSuspense(Component: ComponentType) {
   );
 }
 
-// 路由配置 - 支持嵌套路由和灵活扩展
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -26,15 +23,15 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: withSuspense(HomePage),
+        element: withSuspense(LandingPage),
       },
       {
-        path: '/dashboard',
-        element: withSuspense(DashboardPage),
+        path: '/knowledge',
+        element: withSuspense(KnowledgeTreePage),
       },
       {
-        path: '/settings',
-        element: withSuspense(SettingsPage),
+        path: '/projects',
+        element: withSuspense(ProjectSharePage),
       },
     ],
   },
@@ -44,7 +41,6 @@ const routes: RouteObject[] = [
   },
 ];
 
-// 创建并导出路由实例
 export const router = createBrowserRouter(routes);
 
 export default router;
