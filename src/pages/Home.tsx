@@ -20,22 +20,10 @@ const knowledgeItems: KnowledgeItem[] = [
     filePath: '/content/LLM基础.md',
   },
   {
-    id: 'prompt-engineering',
-    title: '✍️ Prompt Engineering【待完善】',
-    description: '提示工程技术与实践，掌握如何高效地与LLM交互',
-    filePath: '/content/Prompt Engineering.md',
-  },
-  {
     id: 'rag',
-    title: '🔍 RAG【待完善】',
+    title: '🔍 RAG',
     description: '检索增强生成（Retrieval-Augmented Generation），结合外部知识库提升LLM能力',
     filePath: '/content/RAG.md',
-  },
-  {
-    id: 'ai-agent',
-    title: '🤖 AI Agent琐碎知识【待完善】',
-    description: 'AI Agent相关的零散知识点、实践经验与技巧总结',
-    filePath: '/content/AI Agent琐碎知识.md',
   },
   {
     id: 'code-guidelines',
@@ -43,6 +31,18 @@ const knowledgeItems: KnowledgeItem[] = [
     description: '写入 CLAUDE.md 的代码规范，指导 AI 辅助编码行为',
     filePath: '/content/Code Guidelines.md',
   },
+  {
+    id: 'prompt-engineering',
+    title: '✍️ Prompt Engineering【待完善】',
+    description: '提示工程技术与实践，掌握如何高效地与LLM交互',
+    filePath: '/content/Prompt Engineering.md',
+  },
+  {
+    id: 'ai-agent',
+    title: '🤖 AI Agent琐碎知识【待完善】',
+    description: 'AI Agent相关的零散知识点、实践经验与技巧总结',
+    filePath: '/content/AI Agent琐碎知识.md',
+  }, 
   {
     id: 'tbd',
     title: '📝 待扩展【待完善】',
