@@ -92,35 +92,58 @@ export function Landing() {
       <div className="flex-[5]" />
 
       <style>{`
+        /* ===== 桌面端 ===== */
         .cube-scene {
-          perspective: 1200px;
-          width: 320px;
-          height: 320px;
+          perspective: 750px;
+          width: 200px;
+          height: 200px;
         }
-
         .cube {
-          width: 320px;
-          height: 320px;
+          width: 200px;
+          height: 200px;
           position: relative;
           transform-style: preserve-3d;
           animation: spin 12s linear infinite;
         }
-
         .cube-face {
           position: absolute;
-          width: 320px;
-          height: 320px;
-          border-radius: 24px;
-          border: 4px solid rgba(255,255,255,0.3);
-          box-shadow: 0 0 80px rgba(128,0,255,0.3), inset 0 0 80px rgba(255,255,255,0.1);
+          width: 200px;
+          height: 200px;
+          border-radius: 15px;
+          border: 2px solid rgba(255,255,255,0.3);
+          box-shadow: 0 0 50px rgba(128,0,255,0.3), inset 0 0 50px rgba(255,255,255,0.1);
         }
+        .cube-front  { transform: translateZ(100px);  background: linear-gradient(135deg, #ff006e, #ff4da6); }
+        .cube-back   { transform: rotateY(180deg) translateZ(100px); background: linear-gradient(135deg, #3a86ff, #4cc9f0); }
+        .cube-left   { transform: rotateY(-90deg) translateZ(100px); background: linear-gradient(135deg, #8338ec, #b388eb); }
+        .cube-right  { transform: rotateY(90deg) translateZ(100px);  background: linear-gradient(135deg, #06d6a0, #52e0b8); }
+        .cube-top    { transform: rotateX(90deg) translateZ(100px);  background: linear-gradient(135deg, #fb5607, #ff9e5e); }
+        .cube-bottom { transform: rotateX(-90deg) translateZ(100px); background: linear-gradient(135deg, #ffbe0b, #ffe066); }
 
-        .cube-front  { transform: translateZ(160px);  background: linear-gradient(135deg, #ff006e, #ff4da6); }
-        .cube-back   { transform: rotateY(180deg) translateZ(160px); background: linear-gradient(135deg, #3a86ff, #4cc9f0); }
-        .cube-left   { transform: rotateY(-90deg) translateZ(160px); background: linear-gradient(135deg, #8338ec, #b388eb); }
-        .cube-right  { transform: rotateY(90deg) translateZ(160px);  background: linear-gradient(135deg, #06d6a0, #52e0b8); }
-        .cube-top    { transform: rotateX(90deg) translateZ(160px);  background: linear-gradient(135deg, #fb5607, #ff9e5e); }
-        .cube-bottom { transform: rotateX(-90deg) translateZ(160px); background: linear-gradient(135deg, #ffbe0b, #ffe066); }
+        /* ===== 移动端 ===== */
+        @media (max-width: 1023px) {
+          .cube-scene {
+            perspective: 525px;
+            width: 140px;
+            height: 140px;
+          }
+          .cube {
+            width: 140px;
+            height: 140px;
+          }
+          .cube-face {
+            width: 140px;
+            height: 140px;
+            border-radius: 10px;
+            box-shadow: 0 0 35px rgba(128,0,255,0.3), inset 0 0 35px rgba(255,255,255,0.1);
+          }
+          .cube-front  { transform: translateZ(70px); }
+          .cube-back   { transform: rotateY(180deg) translateZ(70px); }
+          .cube-left   { transform: rotateY(-90deg) translateZ(70px); }
+          .cube-right  { transform: rotateY(90deg) translateZ(70px); }
+          .cube-top    { transform: rotateX(90deg) translateZ(70px); }
+          .cube-bottom { transform: rotateX(-90deg) translateZ(70px); }
+        }
 
         @keyframes spin {
           from { transform: rotateX(-20deg) rotateY(0deg); }

@@ -8,6 +8,7 @@ interface TocItem {
 
 interface TocSidebarProps {
   content: string;
+  onItemClick?: () => void;
 }
 
 function slugify(text: string): string {
@@ -17,7 +18,7 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, '');
 }
 
-export function TocSidebar({ content }: TocSidebarProps) {
+export function TocSidebar({ content, onItemClick }: TocSidebarProps) {
   const items = useMemo(() => {
     // 去掉代码块中的内容，避免 # 注释被误识别为标题
     const withoutCode = content.replace(/```[\s\S]*?```/g, '');
@@ -41,6 +42,7 @@ export function TocSidebar({ content }: TocSidebarProps) {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    onItemClick?.();
   };
 
   return (

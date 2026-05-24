@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { MenuOutlined } from '@ant-design/icons';
 import { Card } from '../components';
 import { TocSidebar } from '../components/TocSidebar/TocSidebar';
 
@@ -37,6 +38,12 @@ const knowledgeItems: KnowledgeItem[] = [
     filePath: '/content/AI Agent琐碎知识.md',
   },
   {
+    id: 'code-guidelines',
+    title: '📋 Code Guidelines',
+    description: '写入 CLAUDE.md 的代码规范，指导 AI 辅助编码行为',
+    filePath: '/content/Code Guidelines.md',
+  },
+  {
     id: 'tbd',
     title: '📝 待扩展【待完善】',
     description: '更多内容即将上线，敬请期待',
@@ -47,6 +54,22 @@ export function Home() {
   const [selected, setSelected] = useState<KnowledgeItem | null>(null);
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (deltaX > 60 && touchStartX.current < 40) {
+      setSidebarOpen(true);
+    }
+    if (deltaX < -60) {
+      setSidebarOpen(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!selected?.filePath) {
@@ -79,46 +102,85 @@ export function Home() {
 
   if (selected) {
     return (
-      <div className="p-8">
-        <button
-          onClick={() => setSelected(null)}
-          className="
-            mb-4
-            px-4
-            py-2
-            text-sm
-            text-gray-600
-            dark:text-gray-300
-            hover:text-gray-900
-            dark:hover:text-white
-            transition-colors
-            cursor-pointer
-          "
-        >
-          ← 返回
-        </button>
+      <div
+        className="p-4 lg:p-8"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* 顶部导航行 */}
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => { setSelected(null); setSidebarOpen(false); }}
+            className="
+              px-4 py-2 text-sm
+              text-gray-600 dark:text-gray-300
+              hover:text-gray-900 dark:hover:text-white
+              transition-colors cursor-pointer
+            "
+          >
+            ← 返回
+          </button>
+
+          {content && (
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="
+                lg:hidden
+                px-3 py-1.5 text-sm
+                rounded-md
+                bg-gray-200 dark:bg-gray-700
+                text-gray-700 dark:text-gray-200
+                flex items-center gap-1.5
+              "
+            >
+              <MenuOutlined />
+              目录
+            </button>
+          )}
+        </div>
 
         <div className="flex gap-6">
           {content && (
-            <div className="shrink-0">
-              <TocSidebar content={content} />
-            </div>
+            <>
+              {/* 移动端遮罩层 */}
+              <div
+                className={`lg:hidden fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+                  sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                onClick={() => setSidebarOpen(false)}
+              />
+
+              {/* 移动端侧边抽屉 */}
+              <div className={`
+                lg:hidden fixed left-0 top-0 h-full z-50 w-[260px]
+                transition-transform duration-300
+                ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+              `}>
+                <div className="
+                  h-full overflow-y-auto
+                  bg-white dark:bg-gray-900
+                  shadow-2xl p-4
+                ">
+                  <TocSidebar content={content} onItemClick={() => setSidebarOpen(false)} />
+                </div>
+              </div>
+
+              {/* 桌面端目录栏 */}
+              <div className="hidden lg:block shrink-0">
+                <TocSidebar content={content} />
+              </div>
+            </>
           )}
 
+          {/* Markdown 内容区 */}
           <div className="
-            flex-1
-            min-w-0
-            bg-gray-100
-            dark:bg-gray-800
+            flex-1 min-w-0
+            bg-gray-100 dark:bg-gray-800
             rounded-lg
             min-h-[400px]
-            p-8
+            p-4 lg:p-8
           ">
-            <div className="
-              md-content
-              max-w-4xl
-              mx-auto
-            ">
+            <div className="md-content max-w-4xl mx-auto">
               {loading && <p className="text-center">加载中...</p>}
               {!loading && content && (
                 <ReactMarkdown
@@ -156,7 +218,7 @@ export function Home() {
   }
 
   return (
-    <div className="space-y-6 p-8">
+    <div className="space-y-6 p-4 lg:p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-ink-50 mb-2" />
         <p className="text-gray-600 dark:text-ink-300">

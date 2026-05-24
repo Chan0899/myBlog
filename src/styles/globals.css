@@ -99,6 +99,22 @@ html.dark body {
   color: #79C0FF;
 }
 
+/* 移动端：目录抽屉内重置默认样式，样式由抽屉容器接管 */
+@media (max-width: 1023px) {
+  .toc-sidebar {
+    width: auto;
+    position: static;
+    max-height: none;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .toc-link {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+  }
+}
+
 /* Markdown 内容排版 */
 .md-content h1, .md-content h2, .md-content h3,
 .md-content h4, .md-content h5, .md-content h6 {
@@ -135,6 +151,11 @@ html.dark body {
 .md-content ul, .md-content ol {
   margin-bottom: 0.75rem;
   padding-left: 1.5rem;
+  list-style: revert;
+}
+.md-content strong,
+.md-content b {
+  font-weight: bold;
 }
 .md-content li {
   margin-bottom: 0.25rem;
