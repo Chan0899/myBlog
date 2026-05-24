@@ -4,22 +4,23 @@ interface NumberItem {
   id: number;
   value: number;
   left: number;
-  size: number;
   opacity: number;
   duration: number;
   delay: number;
 }
 
 function generateItems(count: number): NumberItem[] {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    value: (i % 10) + 1,
-    left: Math.random() * 100,
-    size: 14 + Math.random() * 36,
-    opacity: 0.15 + Math.random() * 0.55,
-    duration: 4 + Math.random() * 14,
-    delay: Math.random() * 12,
-  }));
+  return Array.from({ length: count }, (_, i) => {
+    const duration = 4 + Math.random() * 14;
+    return {
+      id: i,
+      value: Math.random() > 0.5 ? 1 : 0,
+      left: Math.random() * 100,
+      opacity: 0.15 + Math.random() * 0.55,
+      duration,
+      delay: -Math.random() * duration,
+    };
+  });
 }
 
 export function Landing() {
@@ -27,34 +28,35 @@ export function Landing() {
 
   return (
     <div className="
-      min-h-full
+      flex-1
       flex
       flex-col
       bg-gray-50
       dark:bg-black
       transition-colors
+      relative
+      overflow-hidden
     ">
-      {/* 上半部分：动效区 */}
-      <div className="flex-1 flex items-center justify-center overflow-hidden relative">
-        {/* 背景数字雨 */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {items.map((item) => (
-            <span
-              key={item.id}
-              className="number-rain"
-              style={{
-                left: `${item.left}%`,
-                fontSize: `${item.size}px`,
-                opacity: item.opacity,
-                animationDuration: `${item.duration}s`,
-                animationDelay: `${item.delay}s`,
-              }}
-            >
-              {item.value}
-            </span>
-          ))}
-        </div>
+      {/* 背景数字雨 — 覆盖整个 Landing */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {items.map((item) => (
+          <span
+            key={item.id}
+            className="number-rain"
+            style={{
+              left: `${item.left}%`,
+              opacity: item.opacity,
+              animationDuration: `${item.duration}s`,
+              animationDelay: `${item.delay}s`,
+            }}
+          >
+            {item.value}
+          </span>
+        ))}
+      </div>
 
+      {/* 上半部分：动效区 */}
+      <div className="flex-[2] flex items-center justify-center relative">
         {/* 3D 正方体 */}
         <div className="cube-scene z-10">
           <div className="cube">
@@ -68,15 +70,18 @@ export function Landing() {
         </div>
       </div>
 
-      {/* 下半部分：黑色文字区 */}
-      <div className="bg-black text-center py-12">
+      {/* 黑灰色透明文字区 */}
+      <div className="bg-gray-900/50 backdrop-blur-sm text-center py-12 relative z-10">
         <h1 className="text-3xl font-bold text-white mb-2">
-          欢迎来到 MyApp
+          欢迎来到 Chan
         </h1>
         <p className="text-gray-400">
           点击导航栏开始探索
         </p>
       </div>
+
+      {/* 占位，将文字区推向上方 */}
+      <div className="flex-[5]" />
 
       <style>{`
         .cube-scene {
@@ -116,8 +121,9 @@ export function Landing() {
 
         .number-rain {
           position: absolute;
-          top: -5%;
+          top: 0;
           color: #fff;
+          font-size: 24px;
           font-weight: 700;
           font-family: monospace;
           white-space: nowrap;
@@ -127,7 +133,7 @@ export function Landing() {
         }
 
         @keyframes fall {
-          0%   { transform: translateY(-5vh); }
+          0%   { transform: translateY(0); }
           100% { transform: translateY(105vh); }
         }
       `}</style>

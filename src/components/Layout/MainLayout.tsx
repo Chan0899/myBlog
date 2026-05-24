@@ -14,8 +14,9 @@ export function MainLayout() {
         <Content className="
           bg-gray-50
           dark:bg-black
-          p-6
           flex-1
+          flex
+          flex-col
           transition-colors
         ">
           <Outlet />

@@ -44,14 +44,12 @@ export function AppHeader() {
       <Link to="/" className="
         text-xl
         font-bold
-        text-blue-600
-        dark:text-blue-400
+        text-[#8BFFC6]
         no-underline
-        hover:text-blue-700
-        dark:hover:text-blue-300
+        hover:text-[#6EEFB0]
         shrink-0
       ">
-        MyApp
+        Chan
       </Link>
 
       <Menu

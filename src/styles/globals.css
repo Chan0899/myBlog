@@ -39,6 +39,180 @@ html.dark body {
   padding: 0 20px;
 }
 
+/* 标题导航栏 */
+.toc-sidebar {
+  width: 220px;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: rgba(127, 127, 127, 0.06);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.toc-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.2);
+}
+.toc-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc-item {
+  margin-bottom: 0;
+}
+.toc-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.25rem 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toc-link:hover {
+  color: #79C0FF;
+}
+.dark .toc-sidebar {
+  background: rgba(255, 255, 255, 0.04);
+}
+.dark .toc-title {
+  color: #9ca3af;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .toc-link {
+  color: #9ca3af;
+}
+.dark .toc-link:hover {
+  color: #79C0FF;
+}
+
+/* Markdown 内容排版 */
+.md-content h1, .md-content h2, .md-content h3,
+.md-content h4, .md-content h5, .md-content h6 {
+  color: #79C0FF;
+}
+.md-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.md-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.md-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.md-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.md-content p {
+  margin-bottom: 0.75rem;
+  line-height: 1.75;
+}
+.md-content ul, .md-content ol {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+.md-content li {
+  margin-bottom: 0.25rem;
+}
+.md-content code {
+  background: rgba(127, 127, 127, 0.15);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+.md-content pre {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.md-content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+.md-content blockquote {
+  border-left: 4px solid #6b7280;
+  padding-left: 1rem;
+  margin-bottom: 0.75rem;
+  color: #6b7280;
+}
+.md-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+.md-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.md-content th, .md-content td {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.md-content th {
+  background: rgba(127, 127, 127, 0.1);
+  font-weight: 600;
+}
+.md-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+.md-content hr {
+  margin: 1.5rem 0;
+  border: none;
+  border-top: 1px solid #d1d5db;
+}
+
+/* 暗色模式 */
+.dark .md-content pre {
+  background: #0d0d0d;
+  color: #d4d4d4;
+}
+.dark .md-content blockquote {
+  border-color: #4b5563;
+  color: #9ca3af;
+}
+.dark .md-content th, .dark .md-content td {
+  border-color: #374151;
+}
+.dark .md-content th {
+  background: rgba(255, 255, 255, 0.05);
+}
+.dark .md-content hr {
+  border-color: #374151;
+}
+
 /* 文本省略号 */
 .line-clamp-1 {
   overflow: hidden;

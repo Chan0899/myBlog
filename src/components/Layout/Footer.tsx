@@ -16,9 +16,9 @@ export function AppFooter() {
       transition-colors
     ">
       <div className="space-y-2">
-        <p className="m-0">© 2024 MyApp. 版权所有</p>
+        {/* <p className="m-0">© 2024 Chan. 版权所有</p> */}
         <p className="m-0 text-gray-400 text-sm">
-          使用 React 18 + Vite + Tailwind CSS + Ant Design 构建
+          联系我们：2292703336@qq.com
         </p>
       </div>
     </Footer>

@@ -4,23 +4,28 @@ interface CardProps {
   title?: ReactNode;
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-export function Card({ title, children, className = '' }: CardProps) {
+export function Card({ title, children, className = '', onClick }: CardProps) {
   return (
-    <div className={`
-      bg-white
-      dark:bg-ink-800
-      rounded-lg
-      shadow-md
-      dark:shadow-ink-800/50
-      overflow-hidden
-      transition-shadow
-      duration-300
-      hover:shadow-lg
-      transition-colors
-      ${className}
-    `}>
+    <div
+      className={`
+        bg-white
+        dark:bg-ink-800
+        rounded-lg
+        shadow-md
+        dark:shadow-ink-800/50
+        overflow-hidden
+        transition-shadow
+        duration-300
+        hover:shadow-lg
+        transition-colors
+        ${onClick ? 'cursor-pointer' : ''}
+        ${className}
+      `}
+      onClick={onClick}
+    >
       {title && (
         <div className="
           px-6
