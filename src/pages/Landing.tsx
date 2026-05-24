@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface NumberItem {
   id: number;
@@ -24,6 +25,7 @@ function generateItems(count: number): NumberItem[] {
 }
 
 export function Landing() {
+  const { theme } = useTheme();
   const items = useMemo(() => generateItems(300), []);
 
   return (
@@ -38,7 +40,13 @@ export function Landing() {
       overflow-hidden
     ">
       {/* 背景数字雨 — 覆盖整个 Landing */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        style={{
+          '--rain-color': theme === 'dark' ? '#fff' : '#000',
+          '--rain-glow': theme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)',
+        } as React.CSSProperties}
+      >
         {items.map((item) => (
           <span
             key={item.id}
@@ -122,14 +130,14 @@ export function Landing() {
         .number-rain {
           position: absolute;
           top: 0;
-          color: #fff;
+          color: var(--rain-color);
           font-size: 24px;
           font-weight: 700;
           font-family: monospace;
           white-space: nowrap;
           user-select: none;
           animation: fall linear infinite;
-          text-shadow: 0 0 6px rgba(255,255,255,0.5);
+          text-shadow: 0 0 6px var(--rain-glow);
         }
 
         @keyframes fall {
