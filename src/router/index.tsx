@@ -6,6 +6,7 @@ import { LoadingFallback } from '../components';
 const LandingPage = lazy(() => import('../pages/Landing'));
 const KnowledgeTreePage = lazy(() => import('../pages/Home'));
 const ProjectSharePage = lazy(() => import('../pages/Dashboard'));
+const BlogPage = lazy(() => import('../pages/Blog'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 function withSuspense(Component: ComponentType) {
@@ -32,6 +33,10 @@ const routes: RouteObject[] = [
       {
         path: '/projects',
         element: withSuspense(ProjectSharePage),
+      },
+      {
+        path: '/blogs',
+        element: withSuspense(BlogPage),
       },
     ],
   },

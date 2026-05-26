@@ -8,12 +8,16 @@ const { Header } = Layout;
 
 const menuItems: MenuProps['items'] = [
   {
+    key: '/blogs',
+    label: '文章博客',
+  },
+  {
     key: '/knowledge',
     label: '知识树',
   },
   {
     key: '/projects',
-    label: '项目分享',
+    label: '项目案例',
   },
 ];
 

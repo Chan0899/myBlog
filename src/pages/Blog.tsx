@@ -1,28 +1,25 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Card } from '../components';
 
-interface ProjectItem {
+interface BlogItem {
   id: string;
   title: string;
   subtitle: string;
-  image: string;
   filePath: string;
 }
 
-const projectItems: ProjectItem[] = [
+const blogItems: BlogItem[] = [
   {
-    id: 'langchain',
-    title: 'Langchain项目',
-    subtitle: '基于 LangChain 框架的 LLM 应用开发实践',
-    image: '/projects/langchain/langchain.png',
-    filePath: '/projects/langchain/PROJECT_INTRO.md',
+    id: 'rag-coref',
+    title: 'RAG系统"硬指代"痛点该怎么解决？',
+    subtitle: '技术 | RAG',
+    filePath: '/blogs/RAG系统硬指代痛点.md',
   },
 ];
 
-export function Dashboard() {
-  const [selected, setSelected] = useState<ProjectItem | null>(null);
+export function Blog() {
+  const [selected, setSelected] = useState<BlogItem | null>(null);
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -71,19 +68,6 @@ export function Dashboard() {
           rounded-lg min-h-[400px]
           p-4 lg:p-8
         ">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-ink-50 mb-2">
-            {selected.title}
-          </h2>
-          <p className="text-gray-600 dark:text-ink-300 mb-6">
-            {selected.subtitle}
-          </p>
-
-          <img
-            src={selected.image}
-            alt={selected.title}
-            className="max-w-full h-auto rounded-lg mb-8"
-          />
-
           <div className="md-content max-w-4xl">
             {loading && <p className="text-center text-gray-500">加载中...</p>}
             {!loading && content && (
@@ -119,30 +103,34 @@ export function Dashboard() {
     <div className="space-y-6 p-4 lg:p-8">
       <div className="mb-8">
         <p className="text-gray-600 dark:text-ink-300">
-          项目案例与经验分享
+          技术 | 生活
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projectItems.map((item) => (
-          <Card
+        {blogItems.map((item) => (
+          <div
             key={item.id}
-            title={item.title}
             onClick={() => setSelected(item)}
+            className="
+              bg-white dark:bg-ink-800
+              rounded-lg border border-gray-200 dark:border-ink-600
+              p-6 cursor-pointer
+              transition-shadow duration-300
+              hover:shadow-lg
+            "
           >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-40 object-cover rounded-md mb-3"
-            />
-            <p className="text-gray-600 dark:text-ink-300 text-sm">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-ink-50 mb-2">
+              {item.title}
+            </h3>
+            <p className="text-gray-500 dark:text-ink-300 text-sm">
               {item.subtitle}
             </p>
-          </Card>
+          </div>
         ))}
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default Blog;
