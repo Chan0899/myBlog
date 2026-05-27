@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Card } from '../components';
+import { RainBackground } from '../components/RainBackground/RainBackground';
 
 interface ProjectItem {
   id: string;
@@ -53,11 +54,13 @@ export function Dashboard() {
 
   if (selected) {
     return (
-      <div className="p-4 lg:p-8">
+      <div className="relative p-4 lg:p-8">
+        <RainBackground />
+
         <button
           onClick={() => setSelected(null)}
           className="
-            mb-4 px-4 py-2 text-sm
+            relative z-10 mb-4 px-4 py-2 text-sm
             text-gray-600 dark:text-gray-300
             hover:text-gray-900 dark:hover:text-white
             transition-colors cursor-pointer
@@ -67,7 +70,9 @@ export function Dashboard() {
         </button>
 
         <div className="
-          bg-gray-100 dark:bg-gray-800
+          relative z-10
+          bg-white/60 dark:bg-gray-900/60
+          backdrop-blur-md
           rounded-lg min-h-[400px]
           p-4 lg:p-8
         ">
@@ -116,19 +121,22 @@ export function Dashboard() {
   }
 
   return (
-    <div className="space-y-6 p-4 lg:p-8">
-      <div className="mb-8">
+    <div className="relative space-y-6 p-4 lg:p-8">
+      <RainBackground />
+
+      <div className="relative z-10 mb-8">
         <p className="text-gray-600 dark:text-ink-300">
           项目案例与经验分享
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projectItems.map((item) => (
           <Card
             key={item.id}
             title={item.title}
             onClick={() => setSelected(item)}
+            className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-md"
           >
             <img
               src={item.image}

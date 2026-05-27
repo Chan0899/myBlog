@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { RainBackground } from '../components/RainBackground/RainBackground';
 
 interface BlogItem {
   id: string;
@@ -64,11 +65,13 @@ export function Blog() {
 
   if (selected) {
     return (
-      <div className="p-4 lg:p-8">
+      <div className="relative p-4 lg:p-8">
+        <RainBackground />
+
         <button
           onClick={() => setSelected(null)}
           className="
-            mb-4 px-4 py-2 text-sm
+            relative z-10 mb-4 px-4 py-2 text-sm
             text-gray-600 dark:text-gray-300
             hover:text-gray-900 dark:hover:text-white
             transition-colors cursor-pointer
@@ -78,7 +81,9 @@ export function Blog() {
         </button>
 
         <div className="
-          bg-gray-100 dark:bg-gray-800
+          relative z-10
+          bg-white/60 dark:bg-gray-900/60
+          backdrop-blur-md
           rounded-lg min-h-[400px]
           p-4 lg:p-8
         ">
@@ -114,23 +119,26 @@ export function Blog() {
   }
 
   return (
-    <div className="space-y-6 p-4 lg:p-8">
-      <div className="mb-8">
+    <div className="relative space-y-6 p-4 lg:p-8">
+      <RainBackground />
+
+      <div className="relative z-10 mb-8">
         <p className="text-gray-600 dark:text-ink-300">
           技术 | 生活
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-6">
+      <div className="relative z-10 flex flex-col items-center gap-6">
         {blogItems.map((item) => (
           <div
             key={item.id}
             onClick={() => setSelected(item)}
             className="
               w-full max-w-5xl
-              bg-white dark:bg-ink-800
-              rounded-lg border border-gray-200 dark:border-ink-600
-              p-6 cursor-pointer
+              bg-white/60 dark:bg-gray-900/60
+              backdrop-blur-md
+              rounded-lg border border-gray-200/50 dark:border-gray-700/50
+              pt-6 px-6 pb-3 cursor-pointer
               transition-shadow duration-300
               hover:shadow-lg
             "

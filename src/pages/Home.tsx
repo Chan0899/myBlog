@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { MenuOutlined } from '@ant-design/icons';
 import { Card } from '../components';
 import { TocSidebar } from '../components/TocSidebar/TocSidebar';
+import { RainBackground } from '../components/RainBackground/RainBackground';
 
 interface KnowledgeItem {
   id: string;
@@ -103,12 +104,14 @@ export function Home() {
   if (selected) {
     return (
       <div
-        className="p-4 lg:p-8"
+        className="relative p-4 lg:p-8"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
+        <RainBackground />
+
         {/* 顶部导航行 */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="relative z-10 flex items-center justify-between mb-4">
           <button
             onClick={() => { setSelected(null); setSidebarOpen(false); }}
             className="
@@ -139,7 +142,7 @@ export function Home() {
           )}
         </div>
 
-        <div className="flex gap-6">
+        <div className="relative z-10 flex gap-6">
           {content && (
             <>
               {/* 移动端遮罩层 */}
@@ -158,7 +161,8 @@ export function Home() {
               `}>
                 <div className="
                   h-full overflow-y-auto
-                  bg-white dark:bg-gray-900
+                  bg-white/80 dark:bg-gray-900/80
+                  backdrop-blur-md
                   shadow-2xl p-4
                 ">
                   <TocSidebar content={content} onItemClick={() => setSidebarOpen(false)} />
@@ -167,7 +171,13 @@ export function Home() {
 
               {/* 桌面端目录栏 */}
               <div className="hidden lg:block shrink-0">
-                <TocSidebar content={content} />
+                <div className="
+                  bg-white/60 dark:bg-gray-900/60
+                  backdrop-blur-md
+                  rounded-lg p-4
+                ">
+                  <TocSidebar content={content} />
+                </div>
               </div>
             </>
           )}
@@ -175,7 +185,8 @@ export function Home() {
           {/* Markdown 内容区 */}
           <div className="
             flex-1 min-w-0
-            bg-gray-100 dark:bg-gray-800
+            bg-white/60 dark:bg-gray-900/60
+            backdrop-blur-md
             rounded-lg
             min-h-[400px]
             p-4 lg:p-8
@@ -218,20 +229,23 @@ export function Home() {
   }
 
   return (
-    <div className="space-y-6 p-4 lg:p-8">
-      <div className="mb-8">
+    <div className="relative space-y-6 p-4 lg:p-8">
+      <RainBackground />
+
+      <div className="relative z-10 mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-ink-50 mb-2" />
         <p className="text-gray-600 dark:text-ink-300">
           前沿知识学习
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {knowledgeItems.map((item) => (
           <Card
             key={item.id}
             title={item.title}
             onClick={() => setSelected(item)}
+            className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-md"
           >
             <p className="text-gray-700 dark:text-ink-200">
               {item.description}

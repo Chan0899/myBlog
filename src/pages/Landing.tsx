@@ -84,7 +84,7 @@ export function Landing() {
           欢迎来到 Chan
         </h1>
         <p className="text-gray-400">
-          点击导航栏开始探索
+          点击最上方导航栏开始探索
         </p>
       </div>
 
