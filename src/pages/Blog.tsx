@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { MenuOutlined } from '@ant-design/icons';
+import { TocSidebar } from '../components/TocSidebar/TocSidebar';
 import { RainBackground } from '../components/RainBackground/RainBackground';
 
 interface BlogItem {
   id: string;
   title: string;
-  subtitle: string;
   summary: string;
   date: string;
   filePath: string;
@@ -15,21 +16,19 @@ interface BlogItem {
 const blogItems: BlogItem[] = [
   {
     id: 'multi-agent-2026',
-    title: '从代码开发到人人可用：2026 多智能体框架对比与平民化革新方案',
-    subtitle: '技术 | 多智能体',
+    title: '告别伪协作与高门槛：2026多智能体框架对比、痛点剖析与平民化真团队架构革新方案',
     summary:
-      '随着AI应用从单一对话走向企业级复杂自动化，传统单智能体能力局限凸显，而早期多智能体方案高度依赖代码开发、专业运维。本文对比2026年主流多智能体框架，聚焦去代码化、平民化、轻量化的革新方向，详解普通人可一键搭建、单人管理智能体团队的落地方案。',
+      '传统单智能体能力有限，而早期多智能体方案普遍存在"伪协作"——框架预设流程、Agent间无动态协商，加上高代码门槛，将多数团队挡在门外。本文对比2026年主流多智能体框架，深度剖析伪协作与高门槛两大痛点，并给出平民化"真团队"架构的革新落地方案。',
     date: '2026-5-27',
-    filePath: '/blogs/从代码开发到人人可用：2026 多智能体框架对比与平民化革新方案.md',
+    filePath: '/blogs/multi-agent-2026/index.md',
   },
   {
     id: 'rag-coref',
     title: 'RAG系统"硬指代"痛点该怎么解决？',
-    subtitle: '技术 | RAG',
     summary:
       '当前垂直领域技术文档中存在大量"硬指代"——通过章节号、条款序号等明确位置指向特定文本，传统RAG因缺乏结构认知而频繁出现定位失效、答非所问。本文分析人类解析硬指代的两大隐性认知系统，并给出AI工程化落地方案：全局路径ID + 指代定位模型双模块架构。',
     date: '2026-5-23',
-    filePath: '/blogs/RAG系统硬指代痛点.md',
+    filePath: '/blogs/rag-coref/index.md',
   },
 ];
 
@@ -37,6 +36,22 @@ export function Blog() {
   const [selected, setSelected] = useState<BlogItem | null>(null);
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (deltaX > 60 && touchStartX.current < 40) {
+      setSidebarOpen(true);
+    }
+    if (deltaX < -60) {
+      setSidebarOpen(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!selected?.filePath) {
@@ -52,66 +67,143 @@ export function Blog() {
       .finally(() => setLoading(false));
   }, [selected]);
 
-  const slugify = (text: string) =>
-    text.toLowerCase().replace(/[^a-z0-9一-龥]+/g, '-').replace(/^-|-$/g, '');
+  const slugify = useCallback((text: string) =>
+    text.toLowerCase().replace(/[^a-z0-9一-龥]+/g, '-').replace(/^-|-$/g, ''),
+  []);
 
-  const heading = (level: number) =>
-    function Heading({ children }: { children?: React.ReactNode }) {
-      const text = String(children ?? '');
-      const id = slugify(text);
-      const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-      return <Tag id={id}>{children}</Tag>;
-    };
+  const heading = useCallback(
+    (level: number) =>
+      function Heading({ children }: { children?: React.ReactNode }) {
+        const text = String(children ?? '');
+        const id = slugify(text);
+        const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+        return <Tag id={id}>{children}</Tag>;
+      },
+    [slugify],
+  );
 
   if (selected) {
     return (
-      <div className="relative p-4 lg:p-8">
+      <div
+        className="relative p-4 lg:p-8"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <RainBackground />
 
-        <button
-          onClick={() => setSelected(null)}
-          className="
-            relative z-10 mb-4 px-4 py-2 text-sm
-            text-gray-600 dark:text-gray-300
-            hover:text-gray-900 dark:hover:text-white
-            transition-colors cursor-pointer
-          "
-        >
-          ← 返回
-        </button>
+        {/* 顶部导航行 */}
+        <div className="relative z-10 flex items-center justify-between mb-4">
+          <button
+            onClick={() => { setSelected(null); setSidebarOpen(false); }}
+            className="
+              px-4 py-2 text-sm
+              text-gray-600 dark:text-gray-300
+              hover:text-gray-900 dark:hover:text-white
+              transition-colors cursor-pointer
+            "
+          >
+            ← 返回
+          </button>
 
-        <div className="
-          relative z-10
-          bg-white/60 dark:bg-gray-900/60
-          backdrop-blur-md
-          rounded-lg min-h-[400px]
-          p-4 lg:p-8
-        ">
-          <div className="md-content max-w-4xl">
-            {loading && <p className="text-center text-gray-500">加载中...</p>}
-            {!loading && content && (
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                urlTransform={(url) => url}
-                components={{
-                  h1: heading(1),
-                  h2: heading(2),
-                  h3: heading(3),
-                  h4: heading(4),
-                  h5: heading(5),
-                  h6: heading(6),
-                  img: ({ src, alt }) => (
-                    <img
-                      src={src}
-                      alt={alt || ''}
-                      className="max-w-full h-auto rounded-lg my-4"
-                    />
-                  ),
-                }}
-              >
-                {content}
-              </ReactMarkdown>
-            )}
+          {content && (
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="
+                lg:hidden
+                px-3 py-1.5 text-sm
+                rounded-md
+                bg-gray-200 dark:bg-gray-700
+                text-gray-700 dark:text-gray-200
+                flex items-center gap-1.5
+              "
+            >
+              <MenuOutlined />
+              目录
+            </button>
+          )}
+        </div>
+
+        <div className="relative z-10 flex gap-6">
+          {content && (
+            <>
+              {/* 移动端遮罩层 */}
+              <div
+                className={`lg:hidden fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+                  sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                onClick={() => setSidebarOpen(false)}
+              />
+
+              {/* 移动端侧边抽屉 */}
+              <div className={`
+                lg:hidden fixed left-0 top-0 h-full z-50 w-[260px]
+                transition-transform duration-300
+                ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+              `}>
+                <div className="
+                  h-full overflow-y-auto
+                  bg-white/80 dark:bg-gray-900/80
+                  backdrop-blur-md
+                  shadow-2xl p-4
+                ">
+                  <TocSidebar content={content} onItemClick={() => setSidebarOpen(false)} />
+                </div>
+              </div>
+
+              {/* 桌面端目录栏 */}
+              <div className="hidden lg:block shrink-0">
+                <div className="
+                  bg-white/60 dark:bg-gray-900/60
+                  backdrop-blur-md
+                  rounded-lg p-4
+                ">
+                  <TocSidebar content={content} />
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Markdown 内容区 */}
+          <div className="
+            flex-1 min-w-0
+            bg-white/60 dark:bg-gray-900/60
+            backdrop-blur-md
+            rounded-lg
+            min-h-[400px]
+            p-4 lg:p-8
+          ">
+            <div className="md-content max-w-4xl mx-auto">
+              {loading && <p className="text-center text-gray-500">加载中...</p>}
+              {!loading && content && (
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  urlTransform={(url) => {
+                    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/') || url.startsWith('#')) {
+                      return url;
+                    }
+                    const dir = selected.filePath.substring(0, selected.filePath.lastIndexOf('/') + 1);
+                    return dir + url;
+                  }}
+                  components={{
+                    h1: heading(1),
+                    h2: heading(2),
+                    h3: heading(3),
+                    h4: heading(4),
+                    h5: heading(5),
+                    h6: heading(6),
+                    img: ({ src, alt }) => (
+                      <img
+                        src={src}
+                        alt={alt || ''}
+                        className="max-w-full h-auto rounded-lg my-4"
+                      />
+                    ),
+                  }}
+                >
+                  {content}
+                </ReactMarkdown>
+              )}
+            </div>
           </div>
         </div>
       </div>
