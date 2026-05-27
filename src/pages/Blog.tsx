@@ -151,7 +151,7 @@ export function Blog() {
               </div>
 
               {/* 桌面端目录栏 */}
-              <div className="hidden lg:block shrink-0">
+              <div className="hidden lg:block shrink-0 lg:sticky lg:top-[80px] lg:self-start">
                 <div className="
                   bg-white/60 dark:bg-gray-900/60
                   backdrop-blur-md
