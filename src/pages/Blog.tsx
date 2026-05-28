@@ -15,6 +15,14 @@ interface BlogItem {
 
 const blogItems: BlogItem[] = [
   {
+    id: 'multi-agent-arch',
+    title: '落地实现：通用平民化多智能体团队架构（可工程落地）',
+    summary:
+      '基于多智能体框架痛点复盘，设计一套通用平民化六层团队架构——从人类管控、零代码可视化交互、AI统筹调度、专业化执行集群，到智能质控进化与统一资源持久层，彻底告别伪协作与高门槛，让普通人也能一键搭建、单人管理专属AI智能体团队。',
+    date: '2026-5-28',
+    filePath: '/blogs/multi-agent-arch/index.md',
+  },
+  {
     id: 'multi-agent-2026',
     title: '告别伪协作与高门槛：2026多智能体框架对比、痛点剖析与平民化真团队架构革新方案',
     summary:
